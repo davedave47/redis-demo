@@ -13,8 +13,9 @@ app.get("/products", async (req, res) => {
     // extract the query parameters
     const { name, price, category } = req.query;
 
+
     // hash the parameters to create a cache key
-    const cacheKey = JSON.stringify({ name, price, category });
+    const cacheKey = JSON.stringify({ name: name.toLowerCase(), price, category: category.toLowerCase() });
     const hash = crypto.createHash("sha256").update(cacheKey).digest("hex");
     // check if the cache exists
     const cachedProducts = await redisClient.get(hash);
@@ -32,7 +33,7 @@ app.get("/products", async (req, res) => {
     
     if (name) query.name = { $regex: name, $options: "i" }; // look for name, option i is for case insensitive
     if (price) query.price = { $lt: price }; // look for price less than the given price, $lt is for less than
-    if (category) query.category = { $regex: category, $options: "i" }; // look for category
+    if (category) query.category = { $regex: `^${category}$`, $options: "i" }; // look for category
     // find the products
     const products = await ProductModel.find(query).lean();
     // set the cache with expireTime
