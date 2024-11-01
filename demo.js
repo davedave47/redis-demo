@@ -14,7 +14,7 @@ app.get("/products/lessthan/:price", async (req, res) => {
     if (cachedProducts) {
         const responseTime = Date.now() - startTime;
         return res.json({
-            cache: true,
+            cache: "hit",
             time: `${responseTime}ms`,
             data: JSON.parse(cachedProducts)
         });    }
@@ -24,7 +24,7 @@ app.get("/products/lessthan/:price", async (req, res) => {
     
         const responseTime = Date.now() - startTime;
         return res.json({
-            cache: false,
+            cache: "miss",
             time: `${responseTime}ms`,
             data: products,
         });
