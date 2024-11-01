@@ -2,7 +2,7 @@ import ProductModel from "./mongo/ProductModel.js";
 import { faker } from "@faker-js/faker";
 
 const BATCH_SIZE = 1000; // Define the batch size
-const TOTAL_PRODUCTS = 3e6; // Total number of products to insert
+const TOTAL_PRODUCTS = 2e6; // Total number of products to insert
 
 async function insertProducts() {
     for (let i = 0; i < TOTAL_PRODUCTS; i += BATCH_SIZE) {
