@@ -1,6 +1,5 @@
 import ProductModel from "./mongo/ProductModel.js";
 import { faker } from "@faker-js/faker";
-import mongoose from "mongoose";
 
 const BATCH_SIZE = 1000; // Define the batch size
 const TOTAL_PRODUCTS = 3e6; // Total number of products to insert

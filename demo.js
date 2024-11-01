@@ -13,9 +13,9 @@ app.get("/products/lessthan/:price", async (req, res) => {
     if (cachedProducts) {
         const responseTime = Date.now() - startTime;
         return res.json({
-            data: JSON.parse(cachedProducts),
             cache: true,
-            time: `${responseTime}ms`
+            time: `${responseTime}ms`,
+            data: JSON.parse(cachedProducts)
         });    }
 
         const products = await ProductModel.find({ price: { $lt: price } });
@@ -23,9 +23,9 @@ app.get("/products/lessthan/:price", async (req, res) => {
     
         const responseTime = Date.now() - startTime;
         return res.json({
-            data: products,
             cache: false,
-            time: `${responseTime}ms`
+            time: `${responseTime}ms`,
+            data: products,
         });
 });
 
