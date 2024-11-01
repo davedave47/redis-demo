@@ -4,6 +4,7 @@ import express from "express";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const expireTime = 60;
 
 app.get("/products/lessthan/:price", async (req, res) => {
     const startTime = Date.now();
@@ -19,7 +20,7 @@ app.get("/products/lessthan/:price", async (req, res) => {
         });    }
 
         const products = await ProductModel.find({ price: { $lt: price } });
-        await redisClient.setEx(price, 3600, JSON.stringify(products));
+        await redisClient.setEx(price, 60, JSON.stringify(products));
     
         const responseTime = Date.now() - startTime;
         return res.json({
