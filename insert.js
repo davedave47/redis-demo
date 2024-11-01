@@ -7,7 +7,7 @@ const TOTAL_PRODUCTS = 2e6; // Total number of products to insert
 async function insertProducts() {
     for (let i = 0; i < TOTAL_PRODUCTS; i += BATCH_SIZE) {
         const products = [];
-
+        // Generate a batch of products
         for (let j = 0; j < BATCH_SIZE && i + j < TOTAL_PRODUCTS; j++) {
             products.push({
                 name: faker.commerce.productName(),

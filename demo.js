@@ -29,16 +29,14 @@ app.get("/products", async (req, res) => {
     }
     // cache miss, create query for mongodb
     const query = {};
-    // look for name, option i is for case insensitive
-    if (name) query.name = { $regex: name, $options: "i" };
-    // look for price less than the given price, $lt is for less than
-    if (price) query.price = { $lt: price };
-    // look for category
-    if (category) query.category = { $regex: category, $options: "i" };
+    
+    if (name) query.name = { $regex: name, $options: "i" }; // look for name, option i is for case insensitive
+    if (price) query.price = { $lt: price }; // look for price less than the given price, $lt is for less than
+    if (category) query.category = { $regex: category, $options: "i" }; // look for category
     // find the products
     const products = await ProductModel.find(query).lean();
-    // set the cache
-    await redisClient.setEx(hash, 60, JSON.stringify(products));
+    // set the cache with expireTime
+    await redisClient.setEx(hash, expireTime, JSON.stringify(products));
     
     const responseTime = Date.now() - startTime;
     return res.json({
