@@ -15,7 +15,8 @@ app.get("/products", async (req, res) => {
 
 
     // hash the parameters to create a cache key
-    const cacheKey = JSON.stringify({ name: name.toLowerCase(), price, category: category.toLowerCase() });
+    const cacheKey = JSON.stringify({ name: name ? name.toLowerCase():undefined, price, category: category ? category.toLowerCase() : undefined });
+    console.log(cacheKey);
     const hash = crypto.createHash("sha256").update(cacheKey).digest("hex");
     // check if the cache exists
     const cachedProducts = await redisClient.get(hash);
